@@ -1,52 +1,60 @@
-/**
- * =====================================================================
- * SERVICE CLASS - PalindromeService (Encapsulation)
- * =====================================================================
- */
-class PalindromeService {
-    /**
-     * Business Logic for Palindrome Check.
-     * This method is encapsulated and can be reused elsewhere.
-     */
-    public boolean check(String input) {
-        if (input == null) return false;
-        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        int left = 0, right = clean.length() - 1;
+import java.util.*;
 
-        while (left < right) {
-            if (clean.charAt(left) != clean.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
+/**
+ * STRATEGY INTERFACE
+ */
+interface PalindromeStrategy {
+    boolean isPalindrome(String text);
+}
+
+/**
+ * CONCRETE STRATEGY 1: Stack Based
+ */
+class StackStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String text) {
+        String clean = text.toLowerCase().replaceAll("[^a-z0-9]", "");
+        Stack<Character> stack = new Stack<>();
+        for (char c : clean.toCharArray()) stack.push(c);
+        for (char c : clean.toCharArray()) {
+            if (c != stack.pop()) return false;
         }
         return true;
     }
 }
 
 /**
- * =====================================================================
+ * CONCRETE STRATEGY 2: Two-Pointer Based
+ */
+class TwoPointerStrategy implements PalindromeStrategy {
+    public boolean isPalindrome(String text) {
+        String clean = text.toLowerCase().replaceAll("[^a-z0-9]", "");
+        int left = 0, right = clean.length() - 1;
+        while (left < right) {
+            if (clean.charAt(left++) != clean.charAt(right--)) return false;
+        }
+        return true;
+    }
+}
+
+/**
  * MAIN CLASS - PalindromeCheckerApp
- * =====================================================================
- * Use Case 11: Object-Oriented Palindrome Service
  */
 public class PalindromeCheckerApp {
-
     public static void main(String[] args) {
-        // UC1: Welcome Message
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 11.0 (OOP Edition)");
+        System.out.println("Version : 12.0 (Design Patterns Edition)");
 
-        // UC11: Using the Service Object
-        String testData = "Was it a car or a cat I saw?";
+        String testData = "Top spot";
 
-        // Creating an object of the Service Class
-        PalindromeService service = new PalindromeService();
+        // Dynamic Strategy Selection (Polymorphism)
+        PalindromeStrategy strategy;
 
-        // Invoking the encapsulated method
-        boolean result = service.check(testData);
+        // Using Two-Pointer Strategy
+        strategy = new TwoPointerStrategy();
+        System.out.println("Using Two-Pointer: " + strategy.isPalindrome(testData));
 
-        System.out.println("Testing OOPS Logic with: " + testData);
-        System.out.println("Is it a Palindrome? : " + result);
+        // Swapping to Stack Strategy at Runtime
+        strategy = new StackStrategy();
+        System.out.println("Using Stack: " + strategy.isPalindrome(testData));
     }
 }
