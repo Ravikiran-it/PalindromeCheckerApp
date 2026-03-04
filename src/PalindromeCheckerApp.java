@@ -1,15 +1,12 @@
 import java.util.*;
 
 /**
- * STRATEGY INTERFACE
+ * UC12/13: Strategy and Performance Comparison
  */
 interface PalindromeStrategy {
     boolean isPalindrome(String text);
 }
 
-/**
- * CONCRETE STRATEGY 1: Stack Based
- */
 class StackStrategy implements PalindromeStrategy {
     public boolean isPalindrome(String text) {
         String clean = text.toLowerCase().replaceAll("[^a-z0-9]", "");
@@ -22,9 +19,6 @@ class StackStrategy implements PalindromeStrategy {
     }
 }
 
-/**
- * CONCRETE STRATEGY 2: Two-Pointer Based
- */
 class TwoPointerStrategy implements PalindromeStrategy {
     public boolean isPalindrome(String text) {
         String clean = text.toLowerCase().replaceAll("[^a-z0-9]", "");
@@ -36,25 +30,28 @@ class TwoPointerStrategy implements PalindromeStrategy {
     }
 }
 
-/**
- * MAIN CLASS - PalindromeCheckerApp
- */
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 12.0 (Design Patterns Edition)");
+        System.out.println("Version : 13.0 (Performance Benchmarking)");
 
-        String testData = "Top spot";
-
-        // Dynamic Strategy Selection (Polymorphism)
+        String testData = "A man a plan a canal Panama";
         PalindromeStrategy strategy;
 
-        // Using Two-Pointer Strategy
+        // --- Benchmark Two-Pointer ---
         strategy = new TwoPointerStrategy();
-        System.out.println("Using Two-Pointer: " + strategy.isPalindrome(testData));
+        long startTP = System.nanoTime();
+        strategy.isPalindrome(testData);
+        long endTP = System.nanoTime();
+        System.out.println("Two-Pointer Time: " + (endTP - startTP) + " ns");
 
-        // Swapping to Stack Strategy at Runtime
+        // --- Benchmark Stack ---
         strategy = new StackStrategy();
-        System.out.println("Using Stack: " + strategy.isPalindrome(testData));
+        long startStack = System.nanoTime();
+        strategy.isPalindrome(testData);
+        long endStack = System.nanoTime();
+        System.out.println("Stack Strategy Time: " + (endStack - startStack) + " ns");
+
+        System.out.println("Performance Comparison Complete.");
     }
 }
