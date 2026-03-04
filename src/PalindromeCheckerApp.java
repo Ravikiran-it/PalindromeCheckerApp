@@ -1,47 +1,52 @@
 /**
  * =====================================================================
- * MAIN CLASS - PalindromeCheckerApp
+ * SERVICE CLASS - PalindromeService (Encapsulation)
  * =====================================================================
- * Use Case 10: Case-Insensitive & Space-Ignored Palindrome
- * Description: This class normalizes input by removing spaces and
- * ignoring case sensitivity before performing validation.
- * @version 10.0
  */
-public class PalindromeCheckerApp {
-
-    public static void main(String[] args) {
-        // UC1: Welcome Message
-        System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 10.0");
-
-        // UC10 Logic: Normalization
-        String originalInput = "A man a plan a canal Panama";
-
-        // Preprocessing: Remove all non-alphanumeric characters and convert to lower case
-        // Hint: Use replaceAll("[^a-zA-Z0-9]", "")
-        String normalizedInput = originalInput.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        boolean isPalindrome = checkPalindrome(normalizedInput);
-
-        System.out.println("Original Input: " + originalInput);
-        System.out.println("Normalized Input: " + normalizedInput);
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
-    }
-
+class PalindromeService {
     /**
-     * Efficient Two-Pointer comparison logic
+     * Business Logic for Palindrome Check.
+     * This method is encapsulated and can be reused elsewhere.
      */
-    public static boolean checkPalindrome(String str) {
-        int left = 0;
-        int right = str.length() - 1;
+    public boolean check(String input) {
+        if (input == null) return false;
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        int left = 0, right = clean.length() - 1;
 
         while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
+            if (clean.charAt(left) != clean.charAt(right)) {
                 return false;
             }
             left++;
             right--;
         }
         return true;
+    }
+}
+
+/**
+ * =====================================================================
+ * MAIN CLASS - PalindromeCheckerApp
+ * =====================================================================
+ * Use Case 11: Object-Oriented Palindrome Service
+ */
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        // UC1: Welcome Message
+        System.out.println("Welcome to the Palindrome Checker Management System");
+        System.out.println("Version : 11.0 (OOP Edition)");
+
+        // UC11: Using the Service Object
+        String testData = "Was it a car or a cat I saw?";
+
+        // Creating an object of the Service Class
+        PalindromeService service = new PalindromeService();
+
+        // Invoking the encapsulated method
+        boolean result = service.check(testData);
+
+        System.out.println("Testing OOPS Logic with: " + testData);
+        System.out.println("Is it a Palindrome? : " + result);
     }
 }
