@@ -4,39 +4,43 @@ import java.util.Stack;
  * =====================================================================
  * MAIN CLASS - PalindromeCheckerApp
  * =====================================================================
- * Use Case 5: Stack Based Palindrome Checker
- * Description: This class validates a palindrome using a Stack
- * data structure which follows the LIFO principle.
- * @version 5.0
+ * Use Case 6: Case-Insensitive Palindrome Check
+ * Description: This class standardizes the input to lower case to ensure
+ * that palindromes with different casing (e.g., "Madam") are validated correctly.
+ * @version 6.0
  */
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
         // UC1: Welcome Message
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 5.0");
+        System.out.println("Version : 6.0");
 
-        // UC5: Stack-Based Logic
-        String input = "noon";
+        // UC6 Logic: Handling Case Sensitivity
+        String originalInput = "Madam";
+
+        // Standardize input to lower case
+        String input = originalInput.toLowerCase();
+
         Stack<Character> stack = new Stack<>();
 
-        // Push each character of the string into the stack
+        // Push standardized characters into stack
         for (char c : input.toCharArray()) {
             stack.push(c);
         }
 
         boolean isPalindrome = true;
 
-        // Iterate again through original string and compare with popped values
+        // Pop and compare
         for (char c : input.toCharArray()) {
-            // Stack.pop() returns elements in reverse order (LIFO)
             if (c != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("Input String: " + input);
+        System.out.println("Original Input : " + originalInput);
+        System.out.println("Standardized Input : " + input);
         System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 }
