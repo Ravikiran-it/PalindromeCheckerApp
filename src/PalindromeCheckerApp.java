@@ -2,47 +2,46 @@
  * =====================================================================
  * MAIN CLASS - PalindromeCheckerApp
  * =====================================================================
- * Use Case 9: Recursive Palindrome Checker
- * Description: This class uses recursion to validate a palindrome.
- * It compares the first and last characters and makes a recursive call
- * for the inner substring.
- * @version 9.0
+ * Use Case 10: Case-Insensitive & Space-Ignored Palindrome
+ * Description: This class normalizes input by removing spaces and
+ * ignoring case sensitivity before performing validation.
+ * @version 10.0
  */
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
         // UC1: Welcome Message
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 9.0");
+        System.out.println("Version : 10.0");
 
-        // UC9 Logic: Recursion
-        String input = "radar";
+        // UC10 Logic: Normalization
+        String originalInput = "A man a plan a canal Panama";
 
-        // Call the recursive helper method
-        boolean isPalindrome = checkPalindromeRecursive(input, 0, input.length() - 1);
+        // Preprocessing: Remove all non-alphanumeric characters and convert to lower case
+        // Hint: Use replaceAll("[^a-zA-Z0-9]", "")
+        String normalizedInput = originalInput.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? (Recursive) : " + isPalindrome);
+        boolean isPalindrome = checkPalindrome(normalizedInput);
+
+        System.out.println("Original Input: " + originalInput);
+        System.out.println("Normalized Input: " + normalizedInput);
+        System.out.println("Is it a Palindrome? : " + isPalindrome);
     }
 
     /**
-     * Recursive method to check palindrome.
-     * @param str The string to check.
-     * @param start Starting index.
-     * @param end Ending index.
-     * @return true if palindrome, false otherwise.
+     * Efficient Two-Pointer comparison logic
      */
-    public static boolean checkPalindromeRecursive(String str, int start, int end) {
-        // Base Condition: If pointers cross or meet, it's a palindrome
-        if (start >= end) {
-            return true;
-        }
+    public static boolean checkPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
 
-        // Recursive Step: Compare characters and move inward
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
-
-        return checkPalindromeRecursive(str, start + 1, end - 1);
+        return true;
     }
 }
