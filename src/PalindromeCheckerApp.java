@@ -1,46 +1,43 @@
-import java.util.Stack;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 /**
  * =====================================================================
  * MAIN CLASS - PalindromeCheckerApp
  * =====================================================================
- * Use Case 6: Case-Insensitive Palindrome Check
- * Description: This class standardizes the input to lower case to ensure
- * that palindromes with different casing (e.g., "Madam") are validated correctly.
- * @version 6.0
+ * Use Case 7: Deque Based Optimized Palindrome Checker
+ * Description: This class validates a palindrome using a Deque
+ * (Double Ended Queue) for efficient front-to-back comparison.
+ * @version 7.0
  */
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
         // UC1: Welcome Message
         System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 6.0");
+        System.out.println("Version : 7.0");
 
-        // UC6 Logic: Handling Case Sensitivity
-        String originalInput = "Madam";
+        // UC7 Logic: Bidirectional Traversal using Deque
+        String input = "refer";
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Standardize input to lower case
-        String input = originalInput.toLowerCase();
-
-        Stack<Character> stack = new Stack<>();
-
-        // Push standardized characters into stack
+        // Add each character to the deque
         for (char c : input.toCharArray()) {
-            stack.push(c);
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
-        // Pop and compare
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+        // Continue comparison while more than one element exists
+        while (deque.size() > 1) {
+            // Remove from both ends and compare
+            if (deque.removeFirst() != deque.removeLast()) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        System.out.println("Original Input : " + originalInput);
-        System.out.println("Standardized Input : " + input);
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
